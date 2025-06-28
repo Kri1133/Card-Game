@@ -27,8 +27,10 @@ int main()
 
     for (int i = 0; i < PLAYER_COUNT; i++)
     {
+        players[i].setNumber(i + 1);
         players[i].setName();
+        players[i].getName();
     }
-    
+
     return 0;
 }
