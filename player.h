@@ -1,3 +1,4 @@
+#pragma once
 #include <string>
 
 class Player
@@ -9,6 +10,8 @@ class Player
 
 public:
     void setNumber(const int i);
+    int getNumber();
     void setName();
-    void getName();
+    std::string getName();
+    // void addCardToHand(const std::string card);
 };

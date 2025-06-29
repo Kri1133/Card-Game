@@ -8,11 +8,22 @@ void Player::setName()
     std::getline(std::cin, name);
 }
 
-void Player::setNumber(const int i){
+int Player::getNumber()
+{
+    return playerNumber;
+}
+
+void Player::setNumber(int i)
+{
     playerNumber = i;
 }
 
-void Player::getName()
+std::string Player::getName()
 {
-    std::cout << "Player " << playerNumber << "'s name is " << name << std::endl;
+    return name;
 }
+
+// void Player::addCardToHand(const std::string card)
+// {
+//     hand->append(card + ", ");
+// }
