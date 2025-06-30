@@ -1,11 +1,12 @@
 #pragma once
 #include <string>
+#include <vector>
 
 class Player
 {
     int playerNumber;
     std::string name;
-    std::string hand[5];
+    std::vector<std::vector<std::string>> hand; // Each player gets 2 cards
     std::string action;
 
 public:
@@ -13,5 +14,6 @@ public:
     int getNumber();
     void setName();
     std::string getName();
-    // void addCardToHand(const std::string card);
+    void addCardToHand(const std::vector<std::string> card);
+    std::vector<std::vector<std::string>> getHand();
 };

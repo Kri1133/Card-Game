@@ -6,6 +6,10 @@ using namespace std;
 
 const int PLAYER_COUNT = 4;
 
+// Player count must not be > 10
+// Otherwise bad things will happen
+// Or so I was told
+
 std::vector<std::vector<string>> shuffleCards(string Deck[52][2])
 {
     bool isCardUsed[52];
@@ -19,7 +23,6 @@ std::vector<std::vector<string>> shuffleCards(string Deck[52][2])
     for (int i = 0; i < 52; i++)
     {
         randomNum = rand() % 52;
-        // std::cout << "Kachow" << endl;
         if (!isCardUsed[randomNum])
         {
             isCardUsed[randomNum] = 1;
@@ -31,16 +34,13 @@ std::vector<std::vector<string>> shuffleCards(string Deck[52][2])
             while (isCardUsed[randomNum] == 1)
             {
                 randomNum = rand() % 52;
-                // std::cout << "'" << randomNum << "'" << endl;
-                // std::cout << isCardUsed[randomNum] << endl;
             }
-            // std::cout << "end" << endl;
             isCardUsed[randomNum] = 1;
             shuffledDeck[i][0] = Deck[randomNum][0];
             shuffledDeck[i][1] = Deck[randomNum][1];
         }
     }
-    
+
     return shuffledDeck;
 }
 
@@ -69,13 +69,27 @@ int main()
     {
         players[i].setNumber(i + 1);
         players[i].setName();
-        // players[i].addCardToHand(Deck[i][0] + " of " + Deck[i][1]);
     }
 
     std::vector<std::vector<string>> shuffledDeck = shuffleCards(Deck);
-    for (int i = 0; i < 52; i++)
+
+    int cardIndex = 0;
+    for (int i = 0; i < PLAYER_COUNT; i++)
     {
-        std::cout << shuffledDeck[i][0] << " of " << shuffledDeck[i][1] << endl;
+        players[i].addCardToHand(shuffledDeck[cardIndex]);
+        cardIndex++;
+        players[i].addCardToHand(shuffledDeck[cardIndex]);
+        cardIndex++;
+    }
+
+    for (int i = 0; i < PLAYER_COUNT; i++)
+    {
+        std::cout << players[i].getName() << ": " << endl;
+        std::vector<std::vector<std::string>> hand = players[i].getHand();
+        for (int i = 0; i < 2; i++)
+        {
+            std::cout << hand[i][0] << " of " << hand[i][1] << endl;
+        }
     }
 
     return 0;

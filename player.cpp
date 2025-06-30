@@ -23,7 +23,11 @@ std::string Player::getName()
     return name;
 }
 
-// void Player::addCardToHand(const std::string card)
-// {
-//     hand->append(card + ", ");
-// }
+void Player::addCardToHand(std::vector<std::string> card)
+{
+    hand.push_back(card);
+}
+
+std::vector<std::vector<std::string>> Player::getHand(){
+    return hand;
+}
