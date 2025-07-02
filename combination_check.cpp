@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <map>
 #include "combination_check.h"
 
 // In this file hand represents the concatenated vectors of the player's hand 
@@ -31,13 +32,15 @@ bool isStraightFlush(const std::vector<std::vector<std::string>> &hand)
     std::string suitToCheck = hand[0][1];
     for (auto card : hand)
     {
-        if (card[1] != suitToCheck)
-        {
-            return false;
-        }
+        if (card[1] != suitToCheck) return false;
     }
     return true;
 
+    static std::map<std::string, int> rankMap = {
+        {"2", 2}, {"3", 3}, {"4", 4}, {"5", 5}, {"6", 6},
+        {"7", 7}, {"8", 8}, {"9", 9}, {"10", 10},
+        {"jack", 11}, {"queen", 12}, {"king", 13}, {"ace", 14}
+    };
     // FINISH
 }
 
