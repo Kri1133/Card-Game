@@ -2,10 +2,14 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <bits/stdc++.h>
 #include "combination_check.h"
 
-// In this file hand represents the concatenated vectors of the player's hand 
+// In this file hand represents the concatenated vectors of the player's hand
 // and the community cards
+
+static std::map<std::string, int> rankMap = {
+    {"2", 2}, {"3", 3}, {"4", 4}, {"5", 5}, {"6", 6}, {"7", 7}, {"8", 8}, {"9", 9}, {"10", 10}, {"Jack", 11}, {"Queen", 12}, {"King", 13}, {"Ace", 14}};
 
 bool isRoyalFlush(const std::vector<std::vector<std::string>> &hand)
 {
@@ -32,20 +36,53 @@ bool isStraightFlush(const std::vector<std::vector<std::string>> &hand)
     std::string suitToCheck = hand[0][1];
     for (auto card : hand)
     {
-        if (card[1] != suitToCheck) return false;
+        if (card[1] != suitToCheck)
+            return false;
+    }
+    //  return true;
+
+    sort(hand.begin(), hand.end());
+    for (int i = 1; i < hand.size() - 1; i++)
+    { // So that next lines are never out of bounds
+        std::string currentCard = hand[i][0];
+        std::string previousCard = hand[i - 1][0];
+        std::string followingCard = hand[i + 1][0];
+        if (rankMap[currentCard] != rankMap[previousCard] + 1 ||
+            rankMap[currentCard] != rankMap[followingCard] - 1)
+        {
+            return false;
+        }
     }
     return true;
-
-    static std::map<std::string, int> rankMap = {
-        {"2", 2}, {"3", 3}, {"4", 4}, {"5", 5}, {"6", 6},
-        {"7", 7}, {"8", 8}, {"9", 9}, {"10", 10},
-        {"jack", 11}, {"queen", 12}, {"king", 13}, {"ace", 14}
-    };
-    // FINISH
 }
 
-bool isFourOfaKind(const std::vector<std::vector<std::string>> &hand);
-bool isFullHouse(const std::vector<std::vector<std::string>> &hand);
+bool isFourOfaKind(const std::vector<std::vector<std::string>> &hand)
+{
+    sort(hand.begin(), hand.end());
+    const std::vector<std::vector<std::string>> check1;
+    const std::vector<std::vector<std::string>> check2;
+    copy(hand.begin(), hand.end() - 1, back_inserter(check1));
+    copy(hand.begin() + 1, hand.end(), back_inserter(check1));
+    for (int i = 0; i < check1.size() - 1; i++)
+    {
+        if (check1[i][0] != check1[i + 1][0])
+        {
+            return false;
+        }
+    }
+    for (int i = 0; i < check1.size() - 1; i++)
+    {
+        if (check1[i][0] != check1[i + 1][0])
+        {
+            return false;
+        }
+    }
+
+};
+
+bool isFullHouse(const std::vector<std::vector<std::string>> &hand){
+    // TO BE CONTINUED
+};
 
 bool isFlush(std::vector<std::vector<std::string>> hand)
 {
@@ -60,7 +97,23 @@ bool isFlush(std::vector<std::vector<std::string>> hand)
     return true;
 }
 
-bool isStraight(const std::vector<std::vector<std::string>> &hand);
+bool isStraight(const std::vector<std::vector<std::string>> &hand) 
+{
+    sort(hand.begin(), hand.end());
+    for (int i = 1; i < hand.size() - 1; i++)
+    { // So that next lines are never out of bounds
+        std::string currentCard = hand[i][0];
+        std::string previousCard = hand[i - 1][0];
+        std::string followingCard = hand[i + 1][0];
+        if (rankMap[currentCard] != rankMap[previousCard] + 1 ||
+            rankMap[currentCard] != rankMap[followingCard] - 1)
+        {
+            return false;
+        }
+    }
+    return true;
+};
+
 bool isThreeOfaKind(const std::vector<std::vector<std::string>> &hand);
 bool isTwoPair(const std::vector<std::vector<std::string>> &hand);
 bool isPair(const std::vector<std::vector<std::string>> &hand);
